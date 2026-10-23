@@ -10,6 +10,7 @@ class QuizProvider extends ChangeNotifier {
   String _selectedCategory = 'Wawasan Umum';
   List<Question> _activeQuestions = quizQuestions;
   int _currentQuestionIndex = 0;
+
   late List<int?> _selectedAnswers = List<int?>.filled(
     _activeQuestions.length,
     null,

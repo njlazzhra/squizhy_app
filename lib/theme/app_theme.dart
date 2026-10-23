@@ -11,25 +11,21 @@ class AppTheme {
 
     return baseTheme.copyWith(
       scaffoldBackgroundColor: AppColors.background,
-
       colorScheme: const ColorScheme.light(
         primary: AppColors.burgundy,
         secondary: AppColors.peach,
         surface: AppColors.white,
         error: AppColors.incorrect,
       ),
-
       textTheme: GoogleFonts.poppinsTextTheme(
         baseTheme.textTheme,
       ).apply(bodyColor: AppColors.darkText, displayColor: AppColors.darkText),
-
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.background,
         foregroundColor: AppColors.burgundy,
         elevation: 0,
         centerTitle: true,
       ),
-
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.burgundy,
@@ -45,7 +41,6 @@ class AppTheme {
           ),
         ),
       ),
-
       cardTheme: CardThemeData(
         color: AppColors.white,
         elevation: 0,
