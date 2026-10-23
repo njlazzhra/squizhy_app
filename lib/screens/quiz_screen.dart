@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/quiz_provider.dart';
 import '../theme/app_colors.dart';
+import '../widgets/quiz_option_card.dart';
 import 'result_screen.dart';
 
 class QuizScreen extends StatelessWidget {
@@ -16,7 +17,7 @@ class QuizScreen extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Squizhy Quiz'),
+            title: Text(quiz.userName.isNotEmpty ? '${quiz.userName}\'s Quiz' : 'Squizhy Quiz'),
             leading: IconButton(
               icon: const Icon(Icons.close),
               tooltip: 'Exit quiz',
@@ -74,66 +75,11 @@ class QuizScreen extends StatelessWidget {
                           ...List.generate(question.options.length, (index) {
                             final isSelected = quiz.selectedAnswer == index;
 
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 12),
-                              child: Material(
-                                color: isSelected
-                                    ? AppColors.peach
-                                    : AppColors.white,
-                                borderRadius: BorderRadius.circular(18),
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(18),
-                                  onTap: () => quiz.selectAnswer(index),
-                                  child: Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.all(16),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(18),
-                                      border: Border.all(
-                                        color: isSelected
-                                            ? AppColors.burgundy
-                                            : AppColors.dustyRose.withValues(
-                                                alpha: 0.4,
-                                              ),
-                                        width: isSelected ? 2 : 1,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 16,
-                                          backgroundColor: isSelected
-                                              ? AppColors.burgundy
-                                              : AppColors.cream,
-                                          child: Text(
-                                            String.fromCharCode(65 + index),
-                                            style: TextStyle(
-                                              color: isSelected
-                                                  ? AppColors.white
-                                                  : AppColors.burgundy,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 12),
-                                        Expanded(
-                                          child: Text(
-                                            question.options[index],
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                        if (isSelected)
-                                          const Icon(
-                                            Icons.check_circle,
-                                            color: AppColors.burgundy,
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
+                            return QuizOptionCard(
+                              optionText: question.options[index],
+                              index: index,
+                              isSelected: isSelected,
+                              onTap: () => quiz.selectAnswer(index),
                             );
                           }),
                         ],

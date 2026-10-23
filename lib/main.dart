@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/quiz_provider.dart';
-import 'screens/welcome_screen.dart';
+import 'screens/splash_screen.dart';
 import 'theme/app_theme.dart';
 
 void main() {
@@ -23,7 +23,7 @@ class SquizhyApp extends StatelessWidget {
       title: 'Squizhy',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const WelcomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }

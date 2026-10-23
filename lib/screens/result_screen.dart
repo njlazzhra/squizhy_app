@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/quiz_provider.dart';
 import '../theme/app_colors.dart';
+import '../widgets/score_card.dart';
 import 'welcome_screen.dart';
 
 class ResultScreen extends StatelessWidget {
@@ -18,6 +19,8 @@ class ResultScreen extends StatelessWidget {
         : percentage >= 50
         ? 'Good effort!'
         : 'Keep practicing!';
+
+    final displayName = quiz.userName.isNotEmpty ? quiz.userName : 'Quiz Challenger';
 
     return Scaffold(
       body: SafeArea(
@@ -50,49 +53,16 @@ class ResultScreen extends StatelessWidget {
                             ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        'You have completed your Squizhy quiz!',
+                      Text(
+                        'Great job, $displayName! You have completed your Squizhy quiz.',
                         textAlign: TextAlign.center,
+                        style: const TextStyle(color: AppColors.secondaryText),
                       ),
                       const SizedBox(height: 24),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 24,
-                          horizontal: 20,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.peach,
-                          borderRadius: BorderRadius.circular(28),
-                        ),
-                        child: Column(
-                          children: [
-                            const Text(
-                              'YOUR SCORE',
-                              style: TextStyle(
-                                color: AppColors.burgundy,
-                                letterSpacing: 2,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              '${quiz.score}/${quiz.totalQuestions}',
-                              style: const TextStyle(
-                                color: AppColors.burgundy,
-                                fontSize: 48,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                            Text(
-                              '$percentage% correct',
-                              style: const TextStyle(
-                                color: AppColors.burgundy,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
+                      ScoreCard(
+                        score: quiz.score,
+                        totalQuestions: quiz.totalQuestions,
+                        percentage: percentage,
                       ),
                       const SizedBox(height: 16),
                       Text(
