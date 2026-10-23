@@ -106,7 +106,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                 controller: _titleController,
                 decoration: InputDecoration(
                   labelText: 'Quiz Title',
-                  hintText: 'e.g. Flutter Trivia',
+                  hintText: 'Mobile Programming',
                   filled: true,
                   fillColor: AppColors.white,
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
@@ -117,8 +117,8 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
               TextFormField(
                 controller: _creatorController,
                 decoration: InputDecoration(
-                  labelText: 'Creator / Teacher Name',
-                  hintText: 'e.g. Alex',
+                  labelText: 'Creator Name',
+                  hintText: 'Najel',
                   filled: true,
                   fillColor: AppColors.white,
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
