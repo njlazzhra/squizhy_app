@@ -7,9 +7,11 @@ import '../models/question.dart';
 
 class QuizProvider extends ChangeNotifier {
   String _userName = '';
+  String _selectedCategory = 'Wawasan Umum';
+  List<Question> _activeQuestions = quizQuestions;
   int _currentQuestionIndex = 0;
-  final List<int?> _selectedAnswers = List<int?>.filled(
-    quizQuestions.length,
+  late List<int?> _selectedAnswers = List<int?>.filled(
+    _activeQuestions.length,
     null,
   );
 
@@ -20,16 +22,31 @@ class QuizProvider extends ChangeNotifier {
   List<int?> _customSelectedAnswers = [];
 
   String get userName => _userName;
+  String get selectedCategory => _selectedCategory;
 
   void setUserName(String name) {
     _userName = name.trim();
     notifyListeners();
   }
 
+  void setQuizCategory(String category) {
+    _selectedCategory = category;
+    if (category == 'Matematika Dasar') {
+      _activeQuestions = mathQuizQuestions;
+    } else if (category == 'Computer Science (Easy)') {
+      _activeQuestions = csQuizQuestions;
+    } else {
+      _activeQuestions = quizQuestions;
+    }
+    _currentQuestionIndex = 0;
+    _selectedAnswers = List<int?>.filled(_activeQuestions.length, null);
+    notifyListeners();
+  }
+
   // --- Standard Quiz Getters & Methods ---
   int get currentQuestionIndex => _currentQuestionIndex;
-  int get totalQuestions => quizQuestions.length;
-  Question get currentQuestion => quizQuestions[_currentQuestionIndex];
+  int get totalQuestions => _activeQuestions.length;
+  Question get currentQuestion => _activeQuestions[_currentQuestionIndex];
   List<int?> get selectedAnswers => List<int?>.unmodifiable(_selectedAnswers);
   int? get selectedAnswer => _selectedAnswers[_currentQuestionIndex];
   int get answeredQuestions =>
@@ -37,8 +54,8 @@ class QuizProvider extends ChangeNotifier {
 
   int get score {
     int totalCorrect = 0;
-    for (int i = 0; i < quizQuestions.length; i++) {
-      if (_selectedAnswers[i] == quizQuestions[i].correctAnswerIndex) {
+    for (int i = 0; i < _activeQuestions.length; i++) {
+      if (_selectedAnswers[i] == _activeQuestions[i].correctAnswerIndex) {
         totalCorrect++;
       }
     }

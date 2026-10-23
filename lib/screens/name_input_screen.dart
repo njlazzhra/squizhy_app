@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,40 @@ class _NameInputScreenState extends State<NameInputScreen> {
     super.dispose();
   }
 
+  void _startRandomQuiz() {
+    final name = _nameController.text.trim();
+    if (name.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter your name to continue!'),
+          backgroundColor: AppColors.burgundy,
+        ),
+      );
+      return;
+    }
+
+    // Randomly pick one of the 3 categories
+    const categories = ['Wawasan Umum', 'Matematika Dasar', 'Computer Science (Easy)'];
+    final randomCategory = categories[Random().nextInt(categories.length)];
+
+    final provider = context.read<QuizProvider>();
+    provider.setUserName(name);
+    provider.setQuizCategory(randomCategory);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('🎲 Random Quiz Assigned: $randomCategory!'),
+        backgroundColor: AppColors.burgundy,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const QuizScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,13 +72,13 @@ class _NameInputScreenState extends State<NameInputScreen> {
               Text(
                 'What should we call you?',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.bold,
                       color: AppColors.burgundy,
                     ),
               ),
               const SizedBox(height: 12),
               const Text(
-                'Enter your name to personalize your quiz experience and view your score on the results screen.',
+                'Enter your name. A random quiz category (General Knowledge, Math, or Computer Science) will be assigned to you!',
                 style: TextStyle(color: AppColors.secondaryText, height: 1.5),
               ),
               const SizedBox(height: 32),
@@ -51,46 +86,20 @@ class _NameInputScreenState extends State<NameInputScreen> {
                 controller: _nameController,
                 autofocus: true,
                 decoration: InputDecoration(
-                  hintText: 'Your name',
+                  labelText: 'Your Name',
+                  hintText: 'e.g. Najel',
                   filled: true,
                   fillColor: AppColors.white,
                   prefixIcon: const Icon(Icons.person_outline, color: AppColors.burgundy),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    borderSide: const BorderSide(color: AppColors.dustyRose),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    borderSide: BorderSide(color: AppColors.dustyRose.withValues(alpha: 0.5)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    borderSide: const BorderSide(color: AppColors.burgundy, width: 2),
-                  ),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
                 ),
               ),
               const Spacer(),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    final name = _nameController.text.trim();
-                    if (name.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Please enter your name to continue!'),
-                          backgroundColor: AppColors.burgundy,
-                        ),
-                      );
-                      return;
-                    }
-                    context.read<QuizProvider>().setUserName(name);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => const QuizScreen()),
-                    );
-                  },
-                  child: const Text('Continue to Quiz'),
+                  onPressed: _startRandomQuiz,
+                  child: const Text('Start Random Quiz'),
                 ),
               ),
               const SizedBox(height: 16),

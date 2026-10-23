@@ -95,3 +95,99 @@ const List<Question> quizQuestions = [
     explanation: 'The traditional list contains seven rainbow colors.',
   ),
 ];
+
+const List<Question> mathQuizQuestions = [
+  Question(
+    id: 'm1',
+    category: 'Math',
+    question: 'What is 15 + 27?',
+    options: ['32', '42', '52', '38'],
+    correctAnswerIndex: 1,
+    explanation: '15 + 27 = 42.',
+  ),
+  Question(
+    id: 'm2',
+    category: 'Math',
+    question: 'What is 8 × 7?',
+    options: ['54', '56', '64', '49'],
+    correctAnswerIndex: 1,
+    explanation: '8 multiplied by 7 is 56.',
+  ),
+  Question(
+    id: 'm3',
+    category: 'Math',
+    question: 'What is 100 ÷ 4?',
+    options: ['20', '25', '30', '15'],
+    correctAnswerIndex: 1,
+    explanation: '100 divided by 4 equals 25.',
+  ),
+  Question(
+    id: 'm4',
+    category: 'Math',
+    question: 'What is 50 - 18?',
+    options: ['32', '28', '34', '42'],
+    correctAnswerIndex: 0,
+    explanation: '50 minus 18 equals 32.',
+  ),
+  Question(
+    id: 'm5',
+    category: 'Math',
+    question: 'What is 9 + 6 × 2?',
+    options: ['30', '21', '24', '18'],
+    correctAnswerIndex: 1,
+    explanation: 'Following order of operations: 6 × 2 = 12, then 9 + 12 = 21.',
+  ),
+];
+
+const List<Question> csQuizQuestions = [
+  Question(
+    id: 'c1',
+    category: 'Computer Science',
+    question: 'Which of the following is an operating system?',
+    options: ['Microsoft Word', 'Google Chrome', 'Windows 11', 'Intel Core i7'],
+    correctAnswerIndex: 2,
+    explanation: 'Windows 11 is an operating system.',
+  ),
+  Question(
+    id: 'c2',
+    category: 'Computer Science',
+    question: 'What does HTML stand for?',
+    options: [
+      'Hyper Text Markup Language',
+      'High Tech Modern Language',
+      'Hyper Transfer Machine Language',
+      'Home Tool Markup Language',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'HTML stands for Hyper Text Markup Language.',
+  ),
+  Question(
+    id: 'c3',
+    category: 'Computer Science',
+    question: 'Which symbol is commonly used in programming for equality comparison?',
+    options: ['=', '==', '!=', '+'],
+    correctAnswerIndex: 1,
+    explanation: '== is used for equality comparison in many programming languages.',
+  ),
+  Question(
+    id: 'c4',
+    category: 'Computer Science',
+    question: 'What is the main function of RAM in a computer?',
+    options: [
+      'Permanent storage',
+      'Temporary working memory',
+      'Displaying graphics',
+      'Processing math calculations',
+    ],
+    correctAnswerIndex: 1,
+    explanation: 'RAM provides temporary working memory for running apps and processes.',
+  ),
+  Question(
+    id: 'c5',
+    category: 'Computer Science',
+    question: 'Which of these is NOT a programming language?',
+    options: ['Python', 'Java', 'HTML', 'C++'],
+    correctAnswerIndex: 2,
+    explanation: 'HTML is a markup language, not a programming language.',
+  ),
+];
