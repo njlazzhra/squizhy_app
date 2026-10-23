@@ -23,6 +23,7 @@ class QuizProvider extends ChangeNotifier {
 
   String get userName => _userName;
   String get selectedCategory => _selectedCategory;
+  List<Question> get activeQuestions => _activeQuestions;
 
   void setUserName(String name) {
     _userName = name.trim();
@@ -100,6 +101,7 @@ class QuizProvider extends ChangeNotifier {
   CustomQuiz? get activeCustomQuiz => _activeCustomQuiz;
   int get customCurrentQuestionIndex => _customCurrentQuestionIndex;
   int get customTotalQuestions => _activeCustomQuiz?.questions.length ?? 0;
+  List<int?> get activeCustomSelectedAnswers => List<int?>.unmodifiable(_customSelectedAnswers);
   
   CustomQuestion get customCurrentQuestion =>
       _activeCustomQuiz!.questions[_customCurrentQuestionIndex];

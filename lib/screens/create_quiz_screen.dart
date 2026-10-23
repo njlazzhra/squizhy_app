@@ -255,6 +255,17 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                 ),
               );
             }),
+            const SizedBox(height: 12),
+            TextFormField(
+              controller: q.explanationController,
+              decoration: const InputDecoration(
+                labelText: 'Explanation (Optional)',
+                hintText: 'e.g. Why is this the correct answer?',
+                filled: true,
+                fillColor: AppColors.background,
+                isDense: true,
+              ),
+            ),
           ],
         ),
       ),
@@ -265,6 +276,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
 class _QuestionDraft {
   final TextEditingController questionController = TextEditingController();
   final List<TextEditingController> optionControllers = List.generate(4, (_) => TextEditingController());
+  final TextEditingController explanationController = TextEditingController();
   int correctAnswerIndex = 0;
 
   bool isValid() {
@@ -280,6 +292,7 @@ class _QuestionDraft {
       question: questionController.text.trim(),
       options: optionControllers.map((c) => c.text.trim()).toList(),
       correctAnswerIndex: correctAnswerIndex,
+      explanation: explanationController.text.trim(),
     );
   }
 
@@ -288,5 +301,6 @@ class _QuestionDraft {
     for (var c in optionControllers) {
       c.dispose();
     }
+    explanationController.dispose();
   }
 }

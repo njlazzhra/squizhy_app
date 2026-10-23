@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/quiz_provider.dart';
 import '../theme/app_colors.dart';
 import '../widgets/score_card.dart';
+import 'custom_quiz_report_screen.dart';
 import 'welcome_screen.dart';
 
 class CustomResultScreen extends StatelessWidget {
@@ -80,6 +81,34 @@ class CustomResultScreen extends StatelessWidget {
                       ),
                       const Spacer(),
                       const SizedBox(height: 24),
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => CustomQuizReportScreen(
+                                  questions: customQuiz.questions,
+                                  userAnswers: quiz.activeCustomSelectedAnswers,
+                                  quizTitle: customQuiz.title,
+                                ),
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.assignment_turned_in_outlined),
+                          label: const Text('View Answer Report'),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppColors.burgundy,
+                            side: const BorderSide(color: AppColors.burgundy),
+                            minimumSize: const Size(double.infinity, 54),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(

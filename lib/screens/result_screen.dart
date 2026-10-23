@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/quiz_provider.dart';
 import '../theme/app_colors.dart';
 import '../widgets/score_card.dart';
+import 'quiz_report_screen.dart';
 import 'welcome_screen.dart';
 
 class ResultScreen extends StatelessWidget {
@@ -54,7 +55,7 @@ class ResultScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Great job, $displayName! You have completed your Squizhy quiz.',
+                        'Great job, $displayName! You completed the "${quiz.selectedCategory}" quiz.',
                         textAlign: TextAlign.center,
                         style: const TextStyle(color: AppColors.secondaryText),
                       ),
@@ -77,6 +78,33 @@ class ResultScreen extends StatelessWidget {
                       ),
                       const Spacer(),
                       const SizedBox(height: 24),
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => QuizReportScreen(
+                                  questions: quiz.activeQuestions,
+                                  userAnswers: quiz.selectedAnswers,
+                                ),
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.assignment_turned_in_outlined),
+                          label: const Text('View Answer Report'),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppColors.burgundy,
+                            side: const BorderSide(color: AppColors.burgundy),
+                            minimumSize: const Size(double.infinity, 54),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(

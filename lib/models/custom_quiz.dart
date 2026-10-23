@@ -2,11 +2,13 @@ class CustomQuestion {
   final String question;
   final List<String> options;
   final int correctAnswerIndex;
+  final String explanation;
 
   CustomQuestion({
     required this.question,
     required this.options,
     required this.correctAnswerIndex,
+    this.explanation = '',
   });
 }
 
