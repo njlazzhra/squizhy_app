@@ -105,11 +105,11 @@ class _QuizCategoryScreenState extends State<QuizCategoryScreen> {
               ),
               const SizedBox(height: 16),
               _CategoryCard(
-                title: 'Computer Science (Easy)',
+                title: 'Computer Science',
                 subtitle: 'Basic programming, OS, HTML & computer basics',
                 icon: Icons.code_rounded,
                 color: AppColors.dustyRose.withValues(alpha: 0.2),
-                onTap: () => _startQuiz('Computer Science (Easy)'),
+                onTap: () => _startQuiz('Computer Science'),
               ),
             ],
           ),

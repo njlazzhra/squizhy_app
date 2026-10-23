@@ -35,7 +35,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
     }
 
     // Randomly pick one of the 3 categories
-    const categories = ['Wawasan Umum', 'Matematika Dasar', 'Computer Science (Easy)'];
+    const categories = ['Wawasan Umum', 'Matematika Dasar', 'Computer Science'];
     final randomCategory = categories[Random().nextInt(categories.length)];
 
     final provider = context.read<QuizProvider>();

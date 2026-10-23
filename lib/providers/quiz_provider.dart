@@ -35,7 +35,7 @@ class QuizProvider extends ChangeNotifier {
     _selectedCategory = category;
     if (category == 'Matematika Dasar') {
       _activeQuestions = mathQuizQuestions;
-    } else if (category == 'Computer Science (Easy)') {
+    } else if (category == 'Computer Science') {
       _activeQuestions = csQuizQuestions;
     } else {
       _activeQuestions = quizQuestions;
