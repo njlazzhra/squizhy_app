@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../models/custom_quiz.dart';
 import '../providers/quiz_provider.dart';
 import '../theme/app_colors.dart';
+import '../utils/responsive.dart';
 import 'share_code_screen.dart';
 
 class CreateQuizScreen extends StatefulWidget {
@@ -57,19 +58,24 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
     for (int i = 0; i < _questions.length; i++) {
       if (!_questions[i].isValid()) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please complete question ${i + 1} and fill all 4 options.')),
+          SnackBar(
+            content: Text(
+              'Please complete question ${i + 1} and fill all 4 options.',
+            ),
+          ),
         );
         return;
       }
     }
 
-    final customQuestions = _questions.map((q) => q.toCustomQuestion()).toList();
+    final customQuestions =
+    _questions.map((q) => q.toCustomQuestion()).toList();
 
     final code = context.read<QuizProvider>().createCustomQuiz(
-          title: _titleController.text.trim(),
-          creatorName: _creatorController.text.trim(),
-          questions: customQuestions,
-        );
+      title: _titleController.text.trim(),
+      creatorName: _creatorController.text.trim(),
+      questions: customQuestions,
+    );
 
     Navigator.pushReplacement(
       context,
@@ -84,79 +90,94 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final sectionStyle = Theme.of(context).textTheme.titleLarge?.copyWith(
+      fontWeight: FontWeight.bold,
+      color: AppColors.burgundy,
+    );
+    final fieldBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(context.w(0.04)),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Craft Your Quiz'),
       ),
       body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            padding: const EdgeInsets.all(20),
-            children: [
-              Text(
-                'Quiz Details',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.burgundy,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: kMaxContentWidth),
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                padding: EdgeInsets.all(context.w(0.05)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text('Quiz Details', style: sectionStyle),
+                    SizedBox(height: context.h(0.015)),
+                    TextFormField(
+                      controller: _titleController,
+                      decoration: InputDecoration(
+                        labelText: 'Quiz Title',
+                        hintText: 'Mobile Programming',
+                        filled: true,
+                        fillColor: AppColors.white,
+                        border: fieldBorder,
+                      ),
+                      validator: (val) => val == null || val.trim().isEmpty
+                          ? 'Please enter a quiz title'
+                          : null,
                     ),
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                  labelText: 'Quiz Title',
-                  hintText: 'Mobile Programming',
-                  filled: true,
-                  fillColor: AppColors.white,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
-                ),
-                validator: (val) => val == null || val.trim().isEmpty ? 'Please enter a quiz title' : null,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _creatorController,
-                decoration: InputDecoration(
-                  labelText: 'Creator Name',
-                  hintText: 'Najel',
-                  filled: true,
-                  fillColor: AppColors.white,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
-                ),
-                validator: (val) => val == null || val.trim().isEmpty ? 'Please enter creator name' : null,
-              ),
-              const SizedBox(height: 28),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Questions (${_questions.length})',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.burgundy,
+                    SizedBox(height: context.h(0.02)),
+                    TextFormField(
+                      controller: _creatorController,
+                      decoration: InputDecoration(
+                        labelText: 'Creator Name',
+                        hintText: 'Najel',
+                        filled: true,
+                        fillColor: AppColors.white,
+                        border: fieldBorder,
+                      ),
+                      validator: (val) => val == null || val.trim().isEmpty
+                          ? 'Please enter creator name'
+                          : null,
+                    ),
+                    SizedBox(height: context.h(0.035)),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Questions (${_questions.length})',
+                            style: sectionStyle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                  ),
-                  TextButton.icon(
-                    onPressed: _addQuestion,
-                    icon: const Icon(Icons.add, color: AppColors.burgundy),
-                    label: const Text('Add Question', style: TextStyle(color: AppColors.burgundy)),
-                  ),
-                ],
+                        TextButton.icon(
+                          onPressed: _addQuestion,
+                          icon: const Icon(Icons.add, color: AppColors.burgundy),
+                          label: const Text(
+                            'Add Question',
+                            style: TextStyle(color: AppColors.burgundy),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: context.h(0.015)),
+                    ..._questions.asMap().entries.map((entry) {
+                      return _buildQuestionCard(entry.key, entry.value);
+                    }),
+                    SizedBox(height: context.h(0.03)),
+                    ElevatedButton.icon(
+                      onPressed: _publishQuiz,
+                      icon: const Icon(Icons.check_circle_outline),
+                      label: const Text('Publish & Generate Code'),
+                    ),
+                    SizedBox(height: context.h(0.04)),
+                  ],
+                ),
               ),
-              const SizedBox(height: 12),
-              ..._questions.asMap().entries.map((entry) {
-                final index = entry.key;
-                final q = entry.value;
-                return _buildQuestionCard(index, q);
-              }),
-              const SizedBox(height: 24),
-              ElevatedButton.icon(
-                onPressed: _publishQuiz,
-                icon: const Icon(Icons.check_circle_outline),
-                label: const Text('Publish & Generate Code'),
-              ),
-              const SizedBox(height: 32),
-            ],
+            ),
           ),
         ),
       ),
@@ -165,11 +186,13 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
 
   Widget _buildQuestionCard(int index, _QuestionDraft q) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      margin: EdgeInsets.only(bottom: context.h(0.025)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(context.w(0.05)),
+      ),
       elevation: 1,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(context.w(0.04)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -178,16 +201,23 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
               children: [
                 Text(
                   'Question ${index + 1}',
-                  style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.burgundy),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.burgundy,
+                  ),
                 ),
                 if (_questions.length > 1)
                   IconButton(
-                    icon: const Icon(Icons.delete_outline, color: Colors.red),
+                    icon: const Icon(
+                      Icons.delete_outline,
+                      color: AppColors.incorrect,
+                    ),
+                    tooltip: 'Remove question',
                     onPressed: () => _removeQuestion(index),
                   ),
               ],
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: context.h(0.01)),
             TextFormField(
               controller: q.questionController,
               decoration: const InputDecoration(
@@ -195,15 +225,19 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                 filled: true,
                 fillColor: AppColors.background,
               ),
-              validator: (val) => val == null || val.trim().isEmpty ? 'Required' : null,
+              validator: (val) =>
+              val == null || val.trim().isEmpty ? 'Required' : null,
             ),
-            const SizedBox(height: 16),
-            const Text('Options (Tap an option badge to set as correct answer):', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-            const SizedBox(height: 8),
+            SizedBox(height: context.h(0.02)),
+            const Text(
+              'Options (Tap an option badge to set as correct answer):',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            SizedBox(height: context.h(0.01)),
             ...List.generate(4, (optIndex) {
               final isCorrect = q.correctAnswerIndex == optIndex;
               return Padding(
-                padding: const EdgeInsets.only(bottom: 8),
+                padding: EdgeInsets.only(bottom: context.h(0.01)),
                 child: Row(
                   children: [
                     InkWell(
@@ -212,39 +246,48 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                           q.correctAnswerIndex = optIndex;
                         });
                       },
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(context.w(0.03)),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.w(0.025),
+                          vertical: context.h(0.01),
+                        ),
                         decoration: BoxDecoration(
-                          color: isCorrect ? AppColors.burgundy : AppColors.cream,
-                          borderRadius: BorderRadius.circular(12),
+                          color:
+                          isCorrect ? AppColors.burgundy : AppColors.cream,
+                          borderRadius:
+                          BorderRadius.circular(context.w(0.03)),
                         ),
                         child: Row(
                           children: [
                             Icon(
                               isCorrect ? Icons.check : Icons.circle_outlined,
-                              size: 16,
-                              color: isCorrect ? AppColors.white : AppColors.burgundy,
+                              size: context.w(0.045),
+                              color: isCorrect
+                                  ? AppColors.white
+                                  : AppColors.burgundy,
                             ),
-                            const SizedBox(width: 4),
+                            SizedBox(width: context.w(0.01)),
                             Text(
                               '${String.fromCharCode(65 + optIndex)}${isCorrect ? ' (Key)' : ''}',
                               style: TextStyle(
-                                fontSize: 12,
                                 fontWeight: FontWeight.bold,
-                                color: isCorrect ? AppColors.white : AppColors.burgundy,
+                                color: isCorrect
+                                    ? AppColors.white
+                                    : AppColors.burgundy,
                               ),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: context.w(0.02)),
                     Expanded(
                       child: TextFormField(
                         controller: q.optionControllers[optIndex],
                         decoration: InputDecoration(
-                          labelText: 'Option ${String.fromCharCode(65 + optIndex)} text',
+                          labelText:
+                          'Option ${String.fromCharCode(65 + optIndex)} text',
                           filled: true,
                           fillColor: AppColors.background,
                           isDense: true,
@@ -255,7 +298,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                 ),
               );
             }),
-            const SizedBox(height: 12),
+            SizedBox(height: context.h(0.015)),
             TextFormField(
               controller: q.explanationController,
               decoration: const InputDecoration(
@@ -275,7 +318,8 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
 
 class _QuestionDraft {
   final TextEditingController questionController = TextEditingController();
-  final List<TextEditingController> optionControllers = List.generate(4, (_) => TextEditingController());
+  final List<TextEditingController> optionControllers =
+  List.generate(4, (_) => TextEditingController());
   final TextEditingController explanationController = TextEditingController();
   int correctAnswerIndex = 0;
 
