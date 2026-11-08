@@ -34,10 +34,3 @@
 
 ### 3. Link Mockup / Prototype
 - [Desain Figma Squizhy](https://www.figma.com/design/kiemYfzNP3LyOGoR8P1aKp/Squizhy_App?node-id=0-1)
-
----
-
-## 🎯 Presentation Outline (5 Menit)
-1. **Fungsionalitas Aplikasi**: Demonstrasi alur kuis standar (random kategori), pembuatan kuis kustom dengan kode, serta laporan jawaban di akhir.
-2. **Responsivitas**: Menunjukkan adaptivitas tampilan aplikasi pada berbagai ukuran layar (mobile & web/tablet view).
-3. **Alur & Implementasi Kode**: Menjelaskan arsitektur `Provider`, penggunaan widget modular, dan struktur kode yang bersih.
