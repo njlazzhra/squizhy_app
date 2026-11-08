@@ -114,15 +114,19 @@ class QuizProvider extends ChangeNotifier {
   bool get customIsLastQuestion =>
       _customCurrentQuestionIndex == customTotalQuestions - 1;
 
-  double get customProgress =>
-      (_customCurrentQuestionIndex + 1) / customTotalQuestions;
+  double get customProgress => customTotalQuestions == 0
+      ? 0
+      : (_customCurrentQuestionIndex + 1) / customTotalQuestions;
 
   String createCustomQuiz({
     required String title,
     required String creatorName,
     required List<CustomQuestion> questions,
   }) {
-    final randomCode = 'SQZ-${1000 + Random().nextInt(9000)}';
+    String randomCode;
+    do {
+      randomCode = 'SQZ-${1000 + Random().nextInt(9000)}';
+    } while (_customQuizzes.containsKey(randomCode));
     final quiz = CustomQuiz(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: title,
