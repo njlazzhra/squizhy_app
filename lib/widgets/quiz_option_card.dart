@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import '../utils/responsive.dart';
 
 class QuizOptionCard extends StatelessWidget {
   final String optionText;
@@ -18,19 +19,21 @@ class QuizOptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final radius = BorderRadius.circular(context.w(0.045));
+
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: EdgeInsets.only(bottom: context.w(0.03)),
       child: Material(
         color: isSelected ? AppColors.peach : AppColors.white,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: radius,
         child: InkWell(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: radius,
           onTap: onTap,
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(context.w(0.04)),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: radius,
               border: Border.all(
                 color: isSelected
                     ? AppColors.burgundy
@@ -41,8 +44,9 @@ class QuizOptionCard extends StatelessWidget {
             child: Row(
               children: [
                 CircleAvatar(
-                  radius: 16,
-                  backgroundColor: isSelected ? AppColors.burgundy : AppColors.cream,
+                  radius: context.w(0.04),
+                  backgroundColor:
+                  isSelected ? AppColors.burgundy : AppColors.cream,
                   child: Text(
                     String.fromCharCode(65 + index),
                     style: TextStyle(
@@ -51,7 +55,7 @@ class QuizOptionCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: context.w(0.03)),
                 Expanded(
                   child: Text(
                     optionText,
@@ -59,10 +63,7 @@ class QuizOptionCard extends StatelessWidget {
                   ),
                 ),
                 if (isSelected)
-                  const Icon(
-                    Icons.check_circle,
-                    color: AppColors.burgundy,
-                  ),
+                  const Icon(Icons.check_circle, color: AppColors.burgundy),
               ],
             ),
           ),
