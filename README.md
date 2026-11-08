@@ -1,44 +1,39 @@
-# Squizhy - Multiple Choice Quiz Mobile App
-
-A playful, engaging, and elegant multiple-choice quiz application built with Flutter as part of the Mobile Programming Lab UTS (Mid-Term Exam).
-
----
+# Squizhy App
 
 ## 👨‍🎓 Student Identity
-- **Nama**: [Nama Mahasiswa]
-- **NIM**: [NIM Mahasiswa]
-- **Lab**: [Lab Pemrograman Mobile]
+- **Nama**: Najla Az Zahra Tanjung
+- **NIM**: 241401136
+- **Lab**: Lab Pemrograman Mobile
 
 ---
 
 ## 📱 Application Information
 - **Nama Aplikasi**: Squizhy
-- **Deskripsi Singkat**: Squizhy adalah aplikasi kuis pilihan ganda interaktif yang dirancang untuk menguji pengetahuan pengguna dalam berbagai kategori (Sains, Geografi, Teknologi, Matematika, dan Pengetahuan Umum) dengan antarmuka yang modern, dinamis, dan ramah pengguna.
+- **Deskripsi Singkat**: Squizhy adalah aplikasi kuis pilihan ganda. Pengguna memasukkan nama, menjawab serangkaian pertanyaan dari kategori yang dipilih acak, lalu melihat skor akhir atas namanya beserta laporan jawaban.
 - **Fitur-Fitur Utama**:
-  1. **Input Nama Pengguna & Random Quiz**: Pengguna memasukkan nama dan mendapatkan kategori kuis secara acak (Wawasan Umum, Matematika Dasar, atau Computer Science).
-  2. **Craft & Share Custom Quiz**: Pengguna/Guru dapat merancang kuis sendiri dan membagikan kode unik (misal `SQZ-4821`) ke pengguna lain untuk dikerjakan.
-  3. **Quiz Answer Report**: Laporan jawaban lengkap di akhir kuis dengan status benar/salah dan penjelasan (*explanation*).
-  4. **Manajemen State Terpusat**: Menggunakan `Provider` (`QuizProvider`) untuk mengelola progres, skor, dan navigasi secara real-time.
-  5. **Reusable Widgets**: Komponen pilihan jawaban (`QuizOptionCard`) dan kartu skor (`ScoreCard`) dipisahkan menjadi modular reusable widgets.
-- **✨ Fitur Responsif & Adaptif**:
-  - Desain UI dilengkapi *constrained container* (`max-width: 600px`), memastikan tampilan tetap rapi, proporsional, dan tidak meregang terlalu lebar saat dijalankan di perangkat tablet atau browser web.
+1. **Input nama dan kuis acak**: pengguna memasukkan nama, lalu mendapat kategori acak (Wawasan Umum, Matematika Dasar, atau Computer Science field).
+2. **Quiz Answer Report**: laporan benar/salah per soal beserta penjelasan.
+3. **Custom Quiz**: pengguna membuat kuis sendiri (judul, soal, empat opsi, kunci jawaban, penjelasan) dan mendapat kode kuis. Kuis dimainkan lewat menu *Enter Quiz Code*. Karena data disimpan lokal tanpa database, kode hanya berlaku selama aplikasi berjalan.
+4. **State management dengan Provider**: progres jawaban tetap aman saat layar dirotasi atau berpindah halaman.
+5. **Konfirmasi keluar kuis** saat tombol silang atau tombol back ditekan.
+6. **Tampilan responsif**: ukuran elemen dihitung dari ukuran layar (bukan nilai tetap), dan konten dibatasi lebar maksimal 600 agar tetap rapi di tablet dan browser.
+7. **Reusable widget**: `QuizOptionCard`, `ScoreCard`, dan dialog konfirmasi keluar dipisah ke folder `widgets`.
 
 ---
 
 ## 📚 Documentation
 
 ### 1. Credit Sumber Aset & Library
-- **Font**: Google Fonts (Poppins)
-- **Ilustrasi & Logo**: Desain kustom Squizhy Branding & Illustration assets (`assets/images/`).
-- **State Management**: `provider: ^6.1.5`
+- **Font**: [Poppins](https://fonts.google.com/specimen/Poppins) oleh Indian Type Foundry, via Google Fonts (SIL Open Font License), dibundel lokal di `assets/fonts/`.
+- **Logo & Ilustrasi**: Dibuat sendiri menggunakan generative AI ChatGPT, tersimpan di `assets/images/`.
+- **Ikon**: [Material Icons](https://fonts.google.com/icons) bawaan Flutter.
+- **State Management**: [`provider`](https://pub.dev/packages/provider) `^6.1.5`.
 
 ### 2. Screenshot Halaman Aplikasi
-| Welcome Screen | Quiz & Report Screen | Craft Quiz & Share Code |
-| :---: | :---: | :---: |
-| *(Screenshot Welcome)* | *(Screenshot Report)* | *(Screenshot Craft Quiz)* |
+- [Google Drive](https://drive.google.com/drive/folders/1_jyscMFy5cv6wIyN2wnYvq-kFuOVXYzA).
 
 ### 3. Link Mockup / Prototype
-- [Link Figma / Mockup Design](https://figma.com)
+- [Desain Figma Squizhy](https://www.figma.com/design/kiemYfzNP3LyOGoR8P1aKp/Squizhy_App?node-id=0-1)
 
 ---
 
