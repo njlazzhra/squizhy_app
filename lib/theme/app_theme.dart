@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import 'app_colors.dart';
 
 class AppTheme {
@@ -17,9 +15,11 @@ class AppTheme {
         surface: AppColors.white,
         error: AppColors.incorrect,
       ),
-      textTheme: GoogleFonts.poppinsTextTheme(
-        baseTheme.textTheme,
-      ).apply(bodyColor: AppColors.darkText, displayColor: AppColors.darkText),
+      textTheme: baseTheme.textTheme.apply(
+        fontFamily: 'Poppins',
+        bodyColor: AppColors.darkText,
+        displayColor: AppColors.darkText,
+      ),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.background,
         foregroundColor: AppColors.burgundy,
@@ -35,7 +35,8 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
-          textStyle: GoogleFonts.poppins(
+          textStyle: const TextStyle(
+            fontFamily: 'Poppins',
             fontSize: 15,
             fontWeight: FontWeight.w600,
           ),
