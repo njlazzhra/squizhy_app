@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/quiz_provider.dart';
 import '../theme/app_colors.dart';
 import '../utils/responsive.dart';
+import '../widgets/exit_quiz_dialog.dart';
 import '../widgets/quiz_option_card.dart';
 import 'result_screen.dart';
 
@@ -12,24 +13,7 @@ class QuizScreen extends StatelessWidget {
 
   Future<void> _handleExit(BuildContext context) async {
     final navigator = Navigator.of(context);
-    final leave = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Keluar dari kuis?'),
-        content: const Text('Yakin ingin keluar dari kuis ini?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Lanjut'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Keluar'),
-          ),
-        ],
-      ),
-    );
-    if (leave == true) navigator.pop();
+    if (await confirmExitQuiz(context)) navigator.pop();
   }
 
   @override
@@ -146,7 +130,7 @@ class QuizScreen extends StatelessWidget {
                                   ),
                                   minimumSize: Size(
                                     context.w(0.14),
-                                    context.h(0.065),
+                                    context.buttonHeight,
                                   ),
                                 ),
                                 child: const Icon(Icons.arrow_back),
