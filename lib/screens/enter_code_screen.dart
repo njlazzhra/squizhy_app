@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/quiz_provider.dart';
 import '../theme/app_colors.dart';
+import '../utils/responsive.dart';
 import 'custom_quiz_screen.dart';
 
 class EnterCodeScreen extends StatefulWidget {
@@ -53,48 +54,81 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
         title: const Text('Enter Quiz Code'),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              Text(
-                'Join Custom Quiz',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.burgundy,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: kMaxContentWidth),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints:
+                    BoxConstraints(minHeight: constraints.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Padding(
+                        padding: EdgeInsets.all(context.w(0.06)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: context.h(0.02)),
+                            Text(
+                              'Join Custom Quiz',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.burgundy,
+                              ),
+                            ),
+                            SizedBox(height: context.h(0.015)),
+                            const Text(
+                              'Enter the code of a custom quiz that was created in this app to play it.',
+                              style: TextStyle(
+                                color: AppColors.secondaryText,
+                                height: 1.5,
+                              ),
+                            ),
+                            SizedBox(height: context.h(0.04)),
+                            TextField(
+                              controller: _codeController,
+                              autofocus: true,
+                              maxLength: 8,
+                              textCapitalization: TextCapitalization.characters,
+                              textInputAction: TextInputAction.done,
+                              onSubmitted: (_) => _joinQuiz(),
+                              decoration: InputDecoration(
+                                labelText: 'Quiz Code',
+                                hintText: 'e.g. SQZ-1234',
+                                counterText: '',
+                                filled: true,
+                                fillColor: AppColors.white,
+                                prefixIcon: const Icon(
+                                  Icons.vpn_key_outlined,
+                                  color: AppColors.burgundy,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                  BorderRadius.circular(context.w(0.045)),
+                                ),
+                              ),
+                            ),
+                            const Spacer(),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: _joinQuiz,
+                                child: const Text('Start Quiz'),
+                              ),
+                            ),
+                            SizedBox(height: context.h(0.02)),
+                          ],
+                        ),
+                      ),
                     ),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'Enter the shareable code provided by your teacher or friend to take their custom quiz.',
-                style: TextStyle(color: AppColors.secondaryText, height: 1.5),
-              ),
-              const SizedBox(height: 32),
-              TextField(
-                controller: _codeController,
-                autofocus: true,
-                textCapitalization: TextCapitalization.characters,
-                decoration: InputDecoration(
-                  labelText: 'Quiz Code',
-                  hintText: 'e.g. SQZ-1234',
-                  filled: true,
-                  fillColor: AppColors.white,
-                  prefixIcon: const Icon(Icons.vpn_key_outlined, color: AppColors.burgundy),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
-                ),
-              ),
-              const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _joinQuiz,
-                  child: const Text('Start Quiz'),
-                ),
-              ),
-              const SizedBox(height: 16),
-            ],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),
