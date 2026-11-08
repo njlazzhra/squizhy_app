@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import '../utils/responsive.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -10,76 +11,81 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('About Squizhy')),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Image.asset(
-                  'assets/images/squizhy_logo.png',
-                  height: 130,
-                  fit: BoxFit.contain,
-                ),
-              ),
-              const SizedBox(height: 24),
-              Text(
-                'Make every answer count.',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: AppColors.burgundy,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'Squizhy is a simple and playful quiz application '
-                'designed to make learning more engaging. Test your '
-                'knowledge, explore different topics, and see how '
-                'much you know.',
-                style: TextStyle(height: 1.7),
-              ),
-              const SizedBox(height: 28),
-              Text(
-                'How to Play',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: AppColors.burgundy,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 16),
-              const _InstructionTile(
-                number: '1',
-                title: 'Start the quiz',
-                description: 'Tap Start Quiz to begin.',
-              ),
-              const _InstructionTile(
-                number: '2',
-                title: 'Choose an answer',
-                description: 'Select one option for every question.',
-              ),
-              const _InstructionTile(
-                number: '3',
-                title: 'Check your score',
-                description: 'Finish the quiz to see your result.',
-              ),
-              const SizedBox(height: 24),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: AppColors.cream,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Text(
-                  'Learn something new, one question at a time!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.burgundy,
-                    fontWeight: FontWeight.w600,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: kMaxContentWidth),
+            child: SingleChildScrollView(
+              padding: EdgeInsets.all(context.w(0.06)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Image.asset(
+                      'assets/images/squizhy_logo.png',
+                      height: context.h(0.16),
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
+                  SizedBox(height: context.h(0.03)),
+                  Text(
+                    'Make every answer count.',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      color: AppColors.burgundy,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  SizedBox(height: context.h(0.015)),
+                  const Text(
+                    'Squizhy is a simple and playful quiz application '
+                        'designed to make learning more engaging. Test your '
+                        'knowledge, explore different topics, and see how '
+                        'much you know.',
+                    style: TextStyle(height: 1.7),
+                  ),
+                  SizedBox(height: context.h(0.035)),
+                  Text(
+                    'How to Play',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: AppColors.burgundy,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(height: context.h(0.02)),
+                  const _InstructionTile(
+                    number: '1',
+                    title: 'Start the quiz',
+                    description: 'Tap Start Standard Quiz to begin.',
+                  ),
+                  const _InstructionTile(
+                    number: '2',
+                    title: 'Choose an answer',
+                    description: 'Select one option for every question.',
+                  ),
+                  const _InstructionTile(
+                    number: '3',
+                    title: 'Check your score',
+                    description: 'Finish the quiz to see your result.',
+                  ),
+                  SizedBox(height: context.h(0.03)),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(context.w(0.045)),
+                    decoration: BoxDecoration(
+                      color: AppColors.cream,
+                      borderRadius: BorderRadius.circular(context.w(0.05)),
+                    ),
+                    child: const Text(
+                      'Learn something new, one question at a time!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.burgundy,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -101,7 +107,7 @@ class _InstructionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.only(bottom: context.h(0.02)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -113,7 +119,7 @@ class _InstructionTile extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          const SizedBox(width: 14),
+          SizedBox(width: context.w(0.035)),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,7 +128,7 @@ class _InstructionTile extends StatelessWidget {
                   title,
                   style: const TextStyle(fontWeight: FontWeight.w700),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: context.h(0.005)),
                 Text(
                   description,
                   style: const TextStyle(
